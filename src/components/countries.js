@@ -29,7 +29,7 @@ class Countries extends Component {
             ))}
           </ul>
         ) : (
-          <div className="alert alert-primary">'Fetching list. Please wait...'</div>
+          <div className="alert alert-primary">Fetching list. Please wait...</div>
         )}
       </div>
     );
