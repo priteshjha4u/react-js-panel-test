@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let constants = {
+const constants = {
   BASE_URL: { dev: '', prod: '' }
 };
 

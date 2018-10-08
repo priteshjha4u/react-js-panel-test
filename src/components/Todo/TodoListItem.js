@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import edit from '../../assets/icons/si-glyph-edit.svg';
+import _delete from '../../assets/icons/si-glyph-delete.svg';
+import check from '../../assets/icons/si-glyph-checked.svg';
 
 class TodoListItem extends Component {
   constructor(props) {
@@ -10,6 +13,12 @@ class TodoListItem extends Component {
     this.okBtnClick = this.okBtnClick.bind(this);
     this.changeTaskName = this.changeTaskName.bind(this);
     this.editBtnClick = this.editBtnClick.bind(this);
+    this.iconsStyle = {
+      cursor: 'pointer',
+      marginRight: '10px',
+      width: '20px',
+      height: '20px'
+    };
   }
 
   mouseEnter(e) {
@@ -63,8 +72,14 @@ class TodoListItem extends Component {
   }
 
   render() {
+    const icon = this.iconsStyle;
+    const { showControls } = this.state;
     if (this.state.tNameEdit) {
-      const errblock = this.state.errorMsg ? <div className="alert alert-danger errblock">{this.state.errorMsg}</div> : null;
+      const errblock = this.state.errorMsg ? (
+        <div className="alert alert-danger" style={{ marginTop: '5px', width: '50%' }}>
+          {this.state.errorMsg}
+        </div>
+      ) : null;
       return (
         <li className="list-group-item">
           <form className="form-inline" onSubmit={this.changeTaskName}>
@@ -77,35 +92,21 @@ class TodoListItem extends Component {
             <span className="btn btn-primary leftBtn" onClick={this.cancelTaskNameEditing.bind(this)}>
               Cancel
             </span>
-            <p>{errblock}</p>
           </form>
+          {errblock}
         </li>
       );
     }
-    let t = this.props.data,
+    const t = this.props.data,
       h = this.props.hash;
-    let liCls = this.state.showControls && t.done !== 'true' ? 'list-group-item infobg' : t.done === 'true' ? 'list-group-item strk' : 'list-group-item';
-    let removebtn = this.state.showControls ? (
-      <span className="float-right" style={{ cursor: 'pointer' }} onClick={this.removeBtnClick} title="Remove todo item">
-        Del
-      </span>
-    ) : null;
-    let okbtn =
-      this.state.showControls && t.done !== 'true' ? (
-        <span className="float-right" style={{ cursor: 'pointer', marginRight: '10px' }} onClick={this.okBtnClick} title="Mark as done.">
-          Ok
-        </span>
-      ) : null;
-    let editBtn =
-      this.state.showControls && t.done !== 'true' ? (
-        <span className="float-right" style={{ cursor: 'pointer', marginRight: '10px' }} onClick={this.editBtnClick} title="Edit task name.">
-          Edit
-        </span>
-      ) : null;
+    const liCls = showControls && t.done !== 'true' ? 'list-group-item infobg' : t.done === 'true' ? 'list-group-item strk' : 'list-group-item';
+    const removebtn = showControls ? <img className="float-right" onClick={this.removeBtnClick} title="Remove todo item" src={_delete} style={icon} alt="" /> : null;
+    const okbtn = showControls && t.done !== 'true' ? <img className="float-right" onClick={this.okBtnClick} title="Mark as done." src={check} style={icon} alt="" /> : null;
+    const editBtn = showControls && t.done !== 'true' ? <img className="float-right" onClick={this.editBtnClick} title="Edit task name." src={edit} style={icon} alt="" /> : null;
     return (
       <li className={liCls} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
         <b>
-          <span className="pull-left">{h}.</span>
+          <span className="float-left">{h}.</span>
           <span className="rmv" title={t.text.length > 25 ? t.text : ''}>
             {t.text.length > 25 ? t.text.substr(0, 25) + '..' : t.text}
           </span>

@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import logo from './logo.svg';
 import './App.css';
-import { jsPanel } from 'jspanel4';
+import { jsPanel } from './jsPanel4/jspanel';
 import '../node_modules/jspanel4/dist/jspanel.min.css';
 import DisplayName from './components/DisplayName';
-import Countries from './components/countries';
+import Countries from './components/Countries';
 import TodoApp from './components/Todo/TodoApp';
+import SampleUsers from './components/SampleUsers';
 
 // Main/Top level React component
 class App extends Component {
@@ -47,6 +48,9 @@ class App extends Component {
         }
         if (action === 'Todo List') {
           ReactDOM.render(<TodoApp />, node);
+        }
+        if (action === 'Sample Users') {
+          ReactDOM.render(<SampleUsers />, node);
         }
       },
       callback: function() {
@@ -93,6 +97,9 @@ class App extends Component {
         </button>
         <button className="btn btn-primary" onClick={this.createJsPanel} id="Todo List" style={{ marginLeft: '10px' }}>
           Todo List
+        </button>
+        <button className="btn btn-primary" onClick={this.createJsPanel} id="Sample Users" style={{ marginLeft: '10px' }}>
+          Sample Users
         </button>
       </div>
     );

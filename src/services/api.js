@@ -6,3 +6,17 @@ export const fetchCountries = () => {
     return data;
   });
 };
+
+export const fetchSampleUsers = () => {
+  return axios
+    .get(endpoints.sampleUsers)
+    .then(res => {
+      if (res && res.data) {
+        return res.data;
+      }
+      return null;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};

@@ -44,23 +44,29 @@ class TodoApp extends Component {
     if (!ls.localStorageExists) {
       return <div className="alert alert-danger">Your browser do not support Local Storage. Please use any modern browser.</div>;
     }
-    let todoList = this.state.data.map((t, i) => {
+    const todoList = this.state.data.map((t, i) => {
       return <TodoListItem data={t} clickHandler={this.updateTodo} key={t.id} hash={i + 1} />;
     });
-    let noItems = !this.state.data.length ? <div className="alert alert-info">Your task list is empty.</div> : null;
-    let taskDone = (() => {
+    const noItems = !this.state.data.length ? <div className="alert alert-danger">Your task list is empty.</div> : null;
+    const taskDone = (() => {
       let d = this.state.data.filter(o => o.done === 'true');
-      return d.length ? <span>, Done : {d.length}</span> : null;
+      return d.length ? (
+        <span className="btn btn-success float-right" style={{ marginRight: '5px' }}>
+          {'Done '}
+          <span className="badge badge-light">{d.length}</span>
+        </span>
+      ) : null;
     })();
     return (
       <div className="card">
         <div className="card-header">
           <h5 className="card-title">
-            Todo App{' '}
-            <span className="float-right">
-              Total Task: {this.state.data.length}
-              {taskDone}
+            {'Todo App'}
+            <span className="float-right btn btn-info">
+              {'Total Task '}
+              <span className="badge badge-light"> {this.state.data.length}</span>
             </span>
+            {taskDone}
           </h5>
         </div>
         <div className="card-body">
